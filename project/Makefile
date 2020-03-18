@@ -7,19 +7,18 @@ CFLAGS          = -mmcu=${CPU} -I../h -L/opt/ti/msp430_gcc/include
 CC              = msp430-elf-gcc
 AS              = msp430-elf-as
 
-all: buzzer.elf 
+all: blinkyBuzzy.elf 
 
 #additional rules for files
-buzzer.elf: ${COMMON_OBJECTS} buzzer.o buzzerMain.o ../lib/libTimer.a
-	${CC} ${CFLAGS} -o $@ $^
+blinkyBuzzy.elf: ${COMMON_OBJECTS} main.o ../demos/lib/libTimer.a
+	${CC} ${CFLAGS} $^ $(LDFLAGS) -o $@ $^
 
-load: buzzer.elf
-	msp430loader.sh buzzer.elf
+load: blinkyBuzzy.elf
+	msp430loader.sh blinkyBuzzy.elf
 
 clean:
 	rm -f *.o *.elf
 
-buzzer.c: buzzer.h
-buzzerMain.c: buzzer.h
+main.o: main.c
 
 
