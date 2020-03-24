@@ -3,6 +3,10 @@
 #include "led.h"
 #include "buzzer.h"
 
+// To avoid implicit declaration warning
+void ZeldaTheme();
+void ZeldaItem();
+
 char switch_state_changed; /* effectively boolean */
 int state =0;
 
@@ -43,10 +47,10 @@ void switch_interrupt_handler(){
 
   //if switch is pressed, below code determines proper case
   switch(state){
-  case 01:// Plays song and shines LEDs
+  case 01:// Plays part of Zelda Theme and shines LEDs
     switch_state_changed = 1;
     blinkLEDS();
-    music();
+    ZeldaTheme();
     
     break;
   case 02:// Shines LEDs
@@ -55,9 +59,10 @@ void switch_interrupt_handler(){
     
     
     break;
-  case 03:
+  case 03://Plays Zelda Item tune and shines LEDs
     switch_state_changed = 1;
     blinkLEDS();
+    ZeldaItem();
 
     break;
   case 04:
