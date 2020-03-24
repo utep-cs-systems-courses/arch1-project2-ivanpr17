@@ -3,7 +3,6 @@
 #include "led.h"
 #include "buzzer.h"
 
-//char switch_state_down,
 char switch_state_changed; /* effectively boolean */
 int state =0;
 
@@ -15,21 +14,20 @@ static char switch_update_interrupt_sense(){
   return p2val;
 }
 
-void 
-switch_init()			/* setup switch */{  
+void switch_init()			/* setup switch */{  
   P2REN |= SWITCHES;		/* enables resistors for switches */
   P2IE = SWITCHES;		/* enable interrupts from switches */
   P2OUT |= SWITCHES;		/* pull-ups for switches */
   P2DIR &= ~SWITCHES;		/* set switches' bits for input */
   switch_update_interrupt_sense();
-  //led_update();
-  switch_interrupt_handler();
+  switch_interrupt_handler();   /* initially read switches */
 }
 
-void
-switch_interrupt_handler(){
+void switch_interrupt_handler(){
   switch_state_changed = 0;
   char p2val = switch_update_interrupt_sense();
+  
+  //if statements for when a switch is up
   if(p2val & SW1 ? 0 : 1){
     state = 01;
   }
@@ -43,14 +41,15 @@ switch_interrupt_handler(){
     state = 04;
   }
 
+  //if switch is pressed, below code determines proper case
   switch(state){
-  case 01:
+  case 01:// Plays song and shines LEDs
     switch_state_changed = 1;
     blinkLEDS();
     music();
     
     break;
-  case 02:
+  case 02:// Shines LEDs
     switch_state_changed = 1;
     blinkLEDS();
     
@@ -72,9 +71,3 @@ switch_interrupt_handler(){
     break;
   }
 }
-/*
-  switch_state_down = (p1val & SW1) ? 0 : 1;  0 when SW1 is up 
-  switch_state_changed = 1;
-  led_update();
-}
-*/

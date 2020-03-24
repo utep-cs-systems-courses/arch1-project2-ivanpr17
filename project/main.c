@@ -7,9 +7,9 @@
 #include <stdlib.h>
 
 int main(void){
-  configureClocks();
+  configureClocks(); // sets up main oscillator, CPU & clocks
   switch_init();
   led_init();
 
-  or_sr(0x18);
+  or_sr(0x18); // CPU off, GIE on
 }
