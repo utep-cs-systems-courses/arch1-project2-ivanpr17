@@ -65,9 +65,9 @@ void switch_interrupt_handler(){
     ZeldaItem();
 
     break;
-  case 04:
+  case 04://Plays Zelda Item tune
     switch_state_changed = 1;
-    blinkLEDS();
+    ZeldaItem();
 
     break;
 
