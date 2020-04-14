@@ -2,6 +2,7 @@
 #include "switches.h"
 #include "led.h"
 #include "buzzer.h"
+#include "switch_state_machine.h"
 
 // To avoid implicit declaration warning
 void ZeldaTheme();
@@ -34,17 +35,23 @@ void switch_interrupt_handler(){
   //if statements for when a switch is up
   if(p2val & SW1 ? 0 : 1){
     state = 01;
+    switch_state_machine_assembly(state);
   }
   if(p2val & SW2 ? 0:1){
     state = 02;
+    switch_state_machine_assembly(state);
   }
   if(p2val & SW3 ? 0:1){
     state = 03;
+    switch_state_machine_assembly(state);
   }
   if(p2val & SW4 ? 0:1){
     state = 04;
+    switch_state_machine_assembly(state);
   }
-
+}
+/*
+void switch_state_machine(int state){
   //if switch is pressed, below code determines proper case
   switch(state){
   case 01:// Plays part of Zelda Theme and shines LEDs
@@ -75,4 +82,6 @@ void switch_interrupt_handler(){
 
     break;
   }
+
 }
+*/

@@ -11,7 +11,7 @@ AS              = msp430-elf-as
 all: blinkyBuzzy.elf 
 
 #additional rules for files
-blinkyBuzzy.elf: ${COMMON_OBJECTS} main.o p1_interrupt_handler.o switches.o led.o buzzer.o ../project/lib/libTimer.a
+blinkyBuzzy.elf: ${COMMON_OBJECTS} main.o p1_interrupt_handler.o switches.o led.o buzzer.o switch_state_machine.o ../project/lib/libTimer.a
 	${CC} ${CFLAGS} $^ $(LDFLAGS) -o $@
 
 load: blinkyBuzzy.elf
@@ -24,6 +24,7 @@ main.c: buzzer.h led.h switches.h
 switches.c: switches.c
 led.c: led.h
 buzzer.c: buzzer.h
+switch_state_machine.s: buzzer.h led.h switches.h
 p1_interrupt_handler.c: switches.h
 wdInterruptHandler.c: buzzer.h led.h
 
